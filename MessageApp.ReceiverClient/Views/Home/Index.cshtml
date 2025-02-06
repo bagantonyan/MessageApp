@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Receiver</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+        .withUrl("https://localhost:7072/messageHub",  
+        {
+            skipNegotiation: true,
+            transport: signalR.HttpTransportType.WebSockets
+        }).build();
+
+        connection.on("ReceiveMessage", function(message) {
+            const messageElement = document.createElement("li");
+            messageElement.textContent = `${message.sequenceNumber} at ${new Date(message.createdAt).toLocaleTimeString()}: ${message.text}`;
+            document.getElementById("messagesList").appendChild(messageElement);
+        });
+
+        connection.start().catch(function(err) {
+            return console.error(err.toString());
+        });
+    </script>
+</head>
+<body>
+    <h1>Messages</h1>
+    <ul id="messagesList"></ul>
+</body>
+</html>

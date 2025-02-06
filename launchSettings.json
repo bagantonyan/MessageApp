@@ -1,0 +1,24 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "messageapp.api": "StartDebugging",
+        "messageapp.senderclient": "StartDebugging",
+        "messageapp.receiverclient": "StartDebugging",
+        "messageapp.historyclient": "StartDebugging"
+      }
+    },
+    "RunAllProjects": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "messageapp.api": "StartDebugging",
+        "messageapp.historyclient": "StartDebugging",
+        "messageapp.receiverclient": "StartDebugging",
+        "messageapp.senderclient": "StartDebugging"
+      }
+    }
+  }
+}

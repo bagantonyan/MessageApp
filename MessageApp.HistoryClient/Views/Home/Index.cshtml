@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message History</title>
+    <script>
+        async function getMessages() {
+            const startTime = new Date(Date.now() - 60000).toISOString();
+            const response = await fetch(`https://localhost:7072/api/messages/getmessages?startTime=${startTime}`);
+            const messages = await response.json();
+            const list = document.getElementById('messageList');
+            list.innerHTML = '';
+            messages.forEach(message => {
+                const li = document.createElement('li');
+                li.textContent = `${message.sequenceNumber}: at ${new Date(message.createdAt).toLocaleTimeString()}: ${message.text}`;
+                list.appendChild(li);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Message History</h1>
+    <button onclick="getMessages()">Get Messages from last minute</button>
+    <ul id="messageList"></ul>
+</body>
+</html>
